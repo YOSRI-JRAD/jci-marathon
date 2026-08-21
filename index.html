@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JCI Marathon — Inscription</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#14213D;
+    --bib-orange:#F2542D;
+    --cream:#FBF9F4;
+    --line:#E4DFD3;
+    --slate:#585B63;
+    --ok-green:#2E7D5B;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--navy);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    padding:48px 20px;
+  }
+  .wrap{
+    width:100%;
+    max-width:960px;
+  }
+  .top-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+    border-bottom:3px solid var(--navy);
+    padding-bottom:18px;
+    margin-bottom:36px;
+  }
+  .brand{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:38px;
+    letter-spacing:1px;
+    line-height:1;
+  }
+  .brand span{color:var(--bib-orange);}
+  .fee-tag{
+    background:var(--navy);
+    color:#fff;
+    padding:10px 18px;
+    border-radius:2px;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    transform:rotate(-1deg);
+  }
+  .fee-tag .fee-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    color:#C9CEDA;
+  }
+  .fee-tag .fee-amount{
+    font-family:'Space Mono',monospace;
+    font-weight:700;
+    font-size:22px;
+    color:var(--bib-orange);
+  }
+  .grid{
+    max-width:520px;
+    margin:0 auto;
+  }
+  .card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:32px;
+  }
+  h2.section-title{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:22px;
+    letter-spacing:0.5px;
+    margin:0 0 24px;
+    color:var(--navy);
+  }
+  .field{
+    margin-bottom:20px;
+  }
+  label{
+    display:block;
+    font-size:12px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.8px;
+    color:var(--slate);
+    margin-bottom:6px;
+  }
+  input[type="text"]{
+    width:100%;
+    padding:11px 12px;
+    border:1.5px solid var(--line);
+    border-radius:3px;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    color:var(--navy);
+    background:var(--cream);
+    transition:border-color .15s ease;
+  }
+  input[type="text"]:focus{
+    outline:none;
+    border-color:var(--bib-orange);
+    background:#fff;
+  }
+  .radio-group{
+    display:flex;
+    gap:12px;
+  }
+  .radio-option{
+    flex:1;
+    position:relative;
+  }
+  .radio-option input{
+    position:absolute;
+    opacity:0;
+    inset:0;
+    cursor:pointer;
+  }
+  .radio-option .box{
+    border:1.5px solid var(--line);
+    border-radius:3px;
+    padding:12px;
+    text-align:center;
+    font-weight:600;
+    font-size:14px;
+    color:var(--slate);
+    background:var(--cream);
+    transition:all .15s ease;
+  }
+  .radio-option input:checked + .box{
+    border-color:var(--bib-orange);
+    background:#FFF1EA;
+    color:var(--bib-orange);
+  }
+  .hint{
+    font-size:12.5px;
+    color:var(--slate);
+    margin-top:6px;
+    line-height:1.5;
+  }
+  button.submit{
+    width:100%;
+    background:var(--navy);
+    color:#fff;
+    border:none;
+    padding:15px;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:0.3px;
+    border-radius:3px;
+    cursor:pointer;
+    margin-top:8px;
+    transition:background .15s ease;
+  }
+  button.submit:hover{background:#1E2E52;}
+  button.submit:disabled{background:#B9BCC4;cursor:not-allowed;}
+
+  /* Confirmation state */
+  .confirm{
+    display:none;
+    text-align:center;
+    padding:40px 20px;
+  }
+  .confirm.show{display:block;}
+  .confirm .check{
+    width:56px;height:56px;
+    border-radius:50%;
+    background:var(--ok-green);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    margin:0 auto 18px;
+  }
+  .confirm h3{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:26px;
+    letter-spacing:0.5px;
+    margin:0 0 10px;
+  }
+  .confirm p{
+    color:var(--slate);
+    font-size:14.5px;
+    line-height:1.6;
+    max-width:360px;
+    margin:0 auto;
+  }
+  .error-msg{
+    display:none;
+    background:#FDECEA;
+    border:1px solid #F1B0AA;
+    color:#8B2E23;
+    padding:12px 14px;
+    border-radius:3px;
+    font-size:13.5px;
+    margin-bottom:18px;
+  }
+  .error-msg.show{display:block;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top-bar">
+    <div class="brand">JCI<span>.</span>MARATHON</div>
+    <div class="fee-tag">
+      <span class="fee-label">Frais d'inscription</span>
+      <span class="fee-amount">30 DT</span>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- FORM -->
+    <div class="card" id="formCard">
+      <h2 class="section-title">Vos informations</h2>
+      <div class="error-msg" id="errorMsg">Une erreur est survenue, veuillez réessayer.</div>
+      <form id="regForm">
+        <div class="field">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" required autocomplete="family-name" placeholder="Ex : Trabelsi">
+        </div>
+        <div class="field">
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" required autocomplete="given-name" placeholder="Ex : Ahmed">
+        </div>
+        <div class="field">
+          <label for="cin">CIN</label>
+          <input type="text" id="cin" required inputmode="numeric" pattern="[0-9]{8}" maxlength="8" placeholder="8 chiffres">
+          <div class="hint">Numéro de carte d'identité nationale, 8 chiffres.</div>
+        </div>
+        <div class="field">
+          <label for="club">Club</label>
+          <input type="text" id="club" required placeholder="Ex : AS Marsa Athlétisme">
+        </div>
+        <div class="field">
+          <label>Achat d'un dossard</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="dossard" value="Oui" required>
+              <span class="box">Oui</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="dossard" value="Non" required>
+              <span class="box">Non</span>
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="submit" id="submitBtn">S'inscrire</button>
+      </form>
+
+      <div class="confirm" id="confirmBox">
+        <div class="check">✓</div>
+        <h3>Inscription enregistrée</h3>
+        <p>Merci ! Votre inscription au JCI Marathon a bien été reçue. Les frais de 30 DT sont à régler selon les modalités communiquées par l'organisation.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  // Remplacez cette URL par celle de votre déploiement Google Apps Script
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5n9b0AoTK7NDicQ6Dseirrbg4TLt6mlXklFOeCxe7xqT3Doah7bDz53gh_jdl2tPF7Q/exec";
+  const FRAIS = 30;
+
+  const form = document.getElementById('regForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const confirmBox = document.getElementById('confirmBox');
+  const errorMsg = document.getElementById('errorMsg');
+
+  const nomInput = document.getElementById('nom');
+  const prenomInput = document.getElementById('prenom');
+  const cinInput = document.getElementById('cin');
+  const clubInput = document.getElementById('club');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    errorMsg.classList.remove('show');
+    const checked = form.querySelector('input[name="dossard"]:checked');
+
+    const entry = {
+      nom: nomInput.value.trim(),
+      prenom: prenomInput.value.trim(),
+      cin: cinInput.value.trim(),
+      club: clubInput.value.trim(),
+      dossard: checked.value,
+      frais: FRAIS
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Envoi en cours...";
+
+    try{
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(entry)
+      });
+
+      form.style.display = 'none';
+      confirmBox.classList.add('show');
+    } catch(err){
+      errorMsg.classList.add('show');
+      submitBtn.disabled = false;
+      submitBtn.textContent = "S'inscrire";
+    }
+  });
+
+</script>
+</body>
+</html>
