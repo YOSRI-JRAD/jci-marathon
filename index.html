@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>JCI Marathon — Inscription</title>
+<title>Move Together — Inscription</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -14,6 +14,7 @@
     --line:#E4DFD3;
     --slate:#585B63;
     --ok-green:#2E7D5B;
+    --teal:#1FB6C9;
   }
   *{box-sizing:border-box;}
   body{
@@ -39,7 +40,7 @@
     gap:16px;
     border-bottom:3px solid var(--navy);
     padding-bottom:18px;
-    margin-bottom:36px;
+    margin-bottom:20px;
   }
   .brand-group{
     display:flex;
@@ -54,33 +55,91 @@
   }
   .brand{
     font-family:'Bebas Neue',sans-serif;
-    font-size:26px;
+    font-size:30px;
     letter-spacing:1px;
     line-height:1.1;
   }
   .brand span{color:var(--bib-orange);}
+  .brand .sub{
+    display:block;
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--slate);
+    margin-top:2px;
+  }
   .fee-tag{
     background:var(--navy);
     color:#fff;
     padding:10px 18px;
     border-radius:2px;
     display:flex;
-    align-items:baseline;
-    gap:8px;
+    align-items:center;
+    gap:16px;
     transform:rotate(-1deg);
   }
+  .fee-tag .fee-block{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+  }
   .fee-tag .fee-label{
-    font-size:11px;
+    font-size:10px;
     text-transform:uppercase;
-    letter-spacing:1.5px;
+    letter-spacing:1.2px;
     color:#C9CEDA;
   }
   .fee-tag .fee-amount{
     font-family:'Space Mono',monospace;
     font-weight:700;
-    font-size:22px;
+    font-size:18px;
     color:var(--bib-orange);
   }
+  .fee-tag .divider{
+    width:1px;
+    height:28px;
+    background:rgba(255,255,255,0.2);
+  }
+
+  /* Event info bar (from poster) */
+  .event-bar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0;
+    background:var(--navy);
+    border-radius:6px;
+    overflow:hidden;
+    margin-bottom:36px;
+  }
+  .event-bar .item{
+    flex:1 1 0;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:16px 20px;
+    border-right:1px solid rgba(255,255,255,0.12);
+    min-width:180px;
+  }
+  .event-bar .item:last-child{border-right:none;}
+  .event-bar svg{flex-shrink:0;}
+  .event-bar .item-label{
+    display:block;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+    color:var(--teal);
+    margin-bottom:2px;
+  }
+  .event-bar .item-value{
+    display:block;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:19px;
+    letter-spacing:0.5px;
+    color:#fff;
+  }
+
   .required-note{
     font-size:12.5px;
     color:var(--slate);
@@ -107,6 +166,7 @@
     margin:0 0 8px;
     color:var(--navy);
   }
+  h2.section-title.spaced{margin-top:36px;}
   .field{
     margin-bottom:20px;
   }
@@ -119,7 +179,7 @@
     color:var(--slate);
     margin-bottom:6px;
   }
-  input[type="text"]{
+  input[type="text"],input[type="email"]{
     width:100%;
     padding:11px 12px;
     border:1.5px solid var(--line);
@@ -130,7 +190,7 @@
     background:var(--cream);
     transition:border-color .15s ease;
   }
-  input[type="text"]:focus{
+  input[type="text"]:focus,input[type="email"]:focus{
     outline:none;
     border-color:var(--bib-orange);
     background:#fff;
@@ -169,6 +229,13 @@
     border-color:var(--bib-orange);
     background:#FFF1EA;
     color:var(--bib-orange);
+  }
+  .radio-option .box .price{
+    display:block;
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    margin-top:3px;
+    opacity:0.85;
   }
   .hint{
     font-size:12.5px;
@@ -236,6 +303,13 @@
     margin-bottom:18px;
   }
   .error-msg.show{display:block;}
+
+  @media (max-width:560px){
+    .event-bar{flex-direction:column;}
+    .event-bar .item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.12);}
+    .event-bar .item:last-child{border-bottom:none;}
+    .fee-tag{transform:none;}
+  }
 </style>
 </head>
 <body>
@@ -244,18 +318,51 @@
   <div class="top-bar">
     <div class="brand-group">
       <img src="JCI - metouia.png" alt="Logo JCI Metouia" class="logo" onerror="this.style.display='none'">
-      <div class="brand">JCI <span>METOUIA</span><br>MARATHON CHALLENGE</div>
+      <div class="brand">MOVE <span>TOGETHER</span>
+        <span class="sub">Activité sportive et conviviale pour tous — Organisé par JCI Metouia</span>
+      </div>
     </div>
-    <div class="fee-tag">
-      <span class="fee-label">Frais d'inscription</span>
-      <span class="fee-amount">30 DT</span>
+    <div class="fee-tag" id="feeTag">
+      <div class="fee-block">
+        <span class="fee-label">8 KM</span>
+        <span class="fee-amount">10 DT</span>
+      </div>
+      <div class="divider"></div>
+      <div class="fee-block">
+        <span class="fee-label">2 KM</span>
+        <span class="fee-amount">5 DT</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-bar">
+    <div class="item">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="#1FB6C9" stroke-width="1.6"/><path d="M3 9H21" stroke="#1FB6C9" stroke-width="1.6"/><path d="M8 3V6" stroke="#1FB6C9" stroke-width="1.6" stroke-linecap="round"/><path d="M16 3V6" stroke="#1FB6C9" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div>
+        <span class="item-label">Date</span>
+        <span class="item-value">20 Septembre</span>
+      </div>
+    </div>
+    <div class="item">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1FB6C9" stroke-width="1.6"/><path d="M12 7V12L15.5 14" stroke="#1FB6C9" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div>
+        <span class="item-label">Heure</span>
+        <span class="item-value">17:00</span>
+      </div>
+    </div>
+    <div class="item">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 21C12 21 19 14.5 19 9.5C19 5.36 15.64 2 12 2C8.36 2 5 5.36 5 9.5C5 14.5 12 21 12 21Z" stroke="#1FB6C9" stroke-width="1.6"/><circle cx="12" cy="9.5" r="2.5" stroke="#1FB6C9" stroke-width="1.6"/></svg>
+      <div>
+        <span class="item-label">Lieu</span>
+        <span class="item-value">Parc Urbain, Metouia</span>
+      </div>
     </div>
   </div>
 
   <div class="grid">
     <!-- FORM -->
     <div class="card" id="formCard">
-      <h2 class="section-title">Vos informations</h2>
+      <h2 class="section-title">1. Vos informations</h2>
       <div class="required-note">Les champs marqués d'un <span class="required">*</span> sont obligatoires.</div>
       <div class="error-msg" id="errorMsg">Une erreur est survenue, veuillez réessayer.</div>
       <form id="regForm">
@@ -273,13 +380,45 @@
           <div class="hint">Numéro de carte d'identité nationale, 8 chiffres.</div>
         </div>
         <div class="field">
-          <label for="club">Club </label>
-          <input type="text" id="club"  placeholder="Ex : JCI Metouia">
+          <label>Sexe <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="sexe" value="Homme" required>
+              <span class="box">Homme</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="sexe" value="Femme" required>
+              <span class="box">Femme</span>
+            </label>
+          </div>
         </div>
         <div class="field">
           <label for="tel">Numéro de téléphone <span class="required">*</span></label>
           <input type="text" id="tel" required inputmode="numeric" pattern="[0-9]{8}" maxlength="8" placeholder="Ex : 20123456">
           <div class="hint">8 chiffres, sans indicatif.</div>
+        </div>
+        <div class="field">
+          <label for="email">Email (facultatif)</label>
+          <input type="email" id="email" placeholder="exemple@mail.com">
+        </div>
+        <div class="field">
+          <label for="club">Club <span class="required">*</span></label>
+          <input type="text" id="club" required placeholder="Ex : JCI Metouia">
+        </div>
+
+        <h2 class="section-title spaced">2. Participation</h2>
+        <div class="field">
+          <label>Activité choisie <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="activite" value="8KM" data-frais="10" required>
+              <span class="box">Course 8 KM<span class="price">10 DT</span></span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="activite" value="2KM" data-frais="5" required>
+              <span class="box">Course 2 KM<span class="price">5 DT</span></span>
+            </label>
+          </div>
         </div>
         <div class="field">
           <label>Achat d'un dossard (paiement sur place)<span class="required">*</span></label>
@@ -294,13 +433,14 @@
             </label>
           </div>
         </div>
+
         <button type="submit" class="submit" id="submitBtn">S'inscrire</button>
       </form>
 
       <div class="confirm" id="confirmBox">
         <div class="check">✓</div>
         <h3>Inscription enregistrée</h3>
-        <p>Merci ! Votre inscription au JCI Marathon a bien été reçue. Les frais de 30 DT sont à régler selon les modalités communiquées par l'organisation.</p>
+        <p>Merci ! Votre inscription à Move Together (20 Septembre, 17:00, Parc Urbain Metouia) a bien été reçue. Les frais sont à régler selon les modalités communiquées par l'organisation.</p>
       </div>
     </div>
 
@@ -311,7 +451,6 @@
 <script>
   // Remplacez cette URL par celle de votre déploiement Google Apps Script
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5n9b0AoTK7NDicQ6Dseirrbg4TLt6mlXklFOeCxe7xqT3Doah7bDz53gh_jdl2tPF7Q/exec";
-  const FRAIS = 30;
 
   const form = document.getElementById('regForm');
   const submitBtn = document.getElementById('submitBtn');
@@ -323,20 +462,26 @@
   const cinInput = document.getElementById('cin');
   const clubInput = document.getElementById('club');
   const telInput = document.getElementById('tel');
+  const emailInput = document.getElementById('email');
 
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     errorMsg.classList.remove('show');
-    const checked = form.querySelector('input[name="dossard"]:checked');
+    const sexeChecked = form.querySelector('input[name="sexe"]:checked');
+    const activiteChecked = form.querySelector('input[name="activite"]:checked');
+    const dossardChecked = form.querySelector('input[name="dossard"]:checked');
 
     const entry = {
       nom: nomInput.value.trim(),
       prenom: prenomInput.value.trim(),
       cin: cinInput.value.trim(),
-      club: clubInput.value.trim(),
+      sexe: sexeChecked.value,
       tel: telInput.value.trim(),
-      dossard: checked.value,
-      frais: FRAIS
+      email: emailInput.value.trim(),
+      club: clubInput.value.trim(),
+      activite: activiteChecked.value,
+      frais: parseInt(activiteChecked.getAttribute('data-frais'), 10),
+      dossard: dossardChecked.value
     };
 
     submitBtn.disabled = true;
