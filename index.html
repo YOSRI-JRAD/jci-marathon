@@ -362,9 +362,11 @@
   <div class="grid">
     <!-- FORM -->
     <div class="card" id="formCard">
-      <h2 class="section-title">1. Vos informations</h2>
-      <div class="required-note">Les champs marqués d'un <span class="required">*</span> sont obligatoires.</div>
-      <div class="error-msg" id="errorMsg">Une erreur est survenue, veuillez réessayer.</div>
+      <div id="formIntro">
+        <h2 class="section-title">1. Vos informations</h2>
+        <div class="required-note">Les champs marqués d'un <span class="required">*</span> sont obligatoires.</div>
+        <div class="error-msg" id="errorMsg">Une erreur est survenue, veuillez réessayer.</div>
+      </div>
       <form id="regForm">
         <div class="field">
           <label for="nom">Nom <span class="required">*</span></label>
@@ -453,6 +455,7 @@
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5n9b0AoTK7NDicQ6Dseirrbg4TLt6mlXklFOeCxe7xqT3Doah7bDz53gh_jdl2tPF7Q/exec";
 
   const form = document.getElementById('regForm');
+  const formIntro = document.getElementById('formIntro');
   const submitBtn = document.getElementById('submitBtn');
   const confirmBox = document.getElementById('confirmBox');
   const errorMsg = document.getElementById('errorMsg');
@@ -496,6 +499,7 @@
       });
 
       form.style.display = 'none';
+      formIntro.style.display = 'none';
       confirmBox.classList.add('show');
     } catch(err){
       errorMsg.classList.add('show');
